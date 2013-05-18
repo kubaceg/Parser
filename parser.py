@@ -1,7 +1,9 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-import sys, lib, os, getopt
+import sys, os, getopt
+import lib.XsltTransformation as XsltTransform
+import lib.WordnetTriples as WordnetTriples
 
 
 def getParams(argv):
@@ -30,4 +32,4 @@ def getParams(argv):
 
 if __name__ == "__main__":
     getParams(sys.argv[1:])
-    xslt = lib.XsltTransformation(inputfile, outputfile)
+    xslt = XsltTransform(inputfile, outputfile)
