@@ -1,26 +1,28 @@
 __author__ = 'kuba'
 
-import libxml2 as xml
+from lxml import etree
 import re
 
 class WordnetTriples:
 
-    labels = []
+    host = "http://127.0.0.1/"
+
+    def extractWords(self, pureLabel):
+        words = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', pureLabel).split("_")
+        #Remove empty string from list
+        return filter(lambda a: a != '', words)
 
     def getAllLabels(self, file):
-        document = xml.parseDoc(open(file).read())
-        context = document.xpathNewContext()
-        context.xpathRegisterNs("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
-        context.xpathRegisterNs("inf", "http://127.0.0.1/inference#")
-        results = context.xpathEval("//*/*/inf:hasLabel/@rdf:resource")
+        document = etree.parse(file)
+        results = document.xpath("//*/*/inf:hasLabel/@rdf:resource", namespaces={'rdf': "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "inf":"http://127.0.0.1/inference#"  })
         for label in results:
-            pureLabel = label.content[label.content.find("(")+1:-1]
-            print re.sub('(.)([A-Z][a-z]+)', r'\1_\2', pureLabel).lower().split("_")
+            pureLabel = label[label.find("(")+1:-1]
+            print self.extractWords(pureLabel)
+
 
 
     def __init__(self):
         self.getAllLabels("../folder/bicycleauto_price_service.rdf")
-        print self.labels
         # g = Graph()
         # g.load("../folder/bicycleauto_price_service.rdf")
         # url = URIRef("http://127.0.0.1")
