@@ -1,6 +1,6 @@
 __author__ = 'kuba'
 
-import sys, os, getopt, shlex
+import sys, os, shlex
 from subprocess import Popen, PIPE, STDOUT
 
 
