@@ -3,13 +3,11 @@
 
 import sys, os, getopt
 import lib.XsltTransformation as XsltTransform
-import lib.WordnetTriples as WordnetTriples
-
 
 def getParams(argv):
     global inputfile
     global outputfile
-    helpMsg = 'parser.py -i <directory with wsdl> -o <directory with output>'
+    helpMsg = 'parser.py -i <directory with wsdl> -o <output directory with rdf>'
     try:
         opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
     except getopt.GetoptError:
